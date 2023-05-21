@@ -13,5 +13,5 @@
 # limitations under the License.
 
 output "name" {
-    value = module.flux_manager_instance.instances_details[0].name
+  value = module.flux_manager_instance.instances_details[0].name
 }

@@ -13,80 +13,86 @@
 # limitations under the License.
 
 module "management_node" {
-    source             = "./modules/management"
-    name_prefix        = var.manager_name_prefix
-    
-    project_id         = var.project_id
-    region             = var.region
-    
-    subnetwork         = var.subnetwork
-    machine_type       = var.manager_machine_type
+  source      = "./modules/management"
+  name_prefix = var.manager_name_prefix
+  family      = var.manager_family
 
-    service_account    = {
-        email  = var.service_account_emails["manager"]
-        scopes = var.manager_scopes
-    }
+  project_id = var.project_id
+  region     = var.region
 
-    compute_node_specs = jsonencode(var.compute_node_specs)
-    login_node_specs   = jsonencode(var.login_node_specs)
+  subnetwork   = var.subnetwork
+  machine_type = var.manager_machine_type
 
-    nfs_mounts         = var.cluster_storage
+  service_account = {
+    email  = var.service_account_emails["manager"]
+    scopes = var.manager_scopes
+  }
+
+  compute_node_specs = jsonencode(var.compute_node_specs)
+  login_node_specs   = jsonencode(var.login_node_specs)
+
+  nfs_mounts = var.cluster_storage
 }
 
 module "login_nodes" {
-    source          = "./modules/login"
+  source = "./modules/login"
 
-    for_each = {
-        for index, node in var.login_node_specs:
-        node.name_prefix => node
-    }
-    project_id      = var.project_id
-    region          = var.region
+  for_each = {
+    for index, node in var.login_node_specs :
+    node.name_prefix => node
+  }
+  project_id = var.project_id
+  region     = var.region
 
-    name_prefix     = each.value.name_prefix
-    subnetwork      = var.subnetwork
-    machine_arch    = each.value.machine_arch
-    machine_type    = each.value.machine_type
-    num_instances   = each.value.instances
-    manager         = module.management_node.name
+  name_prefix = each.value.name_prefix
+  family      = var.login_family
 
-    boot_script       = lookup(each.value, "boot_script", null) == null ? null : file("${each.value.boot_script}")
-    service_account = {
-        email  = var.service_account_emails["login"]
-        scopes = var.login_scopes
-    }
+  subnetwork    = var.subnetwork
+  machine_arch  = each.value.machine_arch
+  machine_type  = each.value.machine_type
+  num_instances = each.value.instances
+  manager       = module.management_node.name
 
-    nfs_mounts      = var.cluster_storage
+  boot_script = lookup(each.value, "boot_script", null) == null ? null : file("${each.value.boot_script}")
+  service_account = {
+    email  = var.service_account_emails["login"]
+    scopes = var.login_scopes
+  }
+
+  nfs_mounts = var.cluster_storage
 }
 
 module "compute_nodes" {
-    source          = "./modules/compute"
+  source = "./modules/compute"
 
-    for_each = {
-        for index, node in var.compute_node_specs:
-        node.name_prefix => node
-    }
-    project_id        = var.project_id
-    region            = var.region
+  for_each = {
+    for index, node in var.compute_node_specs :
+    node.name_prefix => node
+  }
+  project_id = var.project_id
+  region     = var.region
 
-    name_prefix       = each.value.name_prefix
-    subnetwork        = var.subnetwork
-    machine_arch      = each.value.machine_arch
-    machine_type      = each.value.machine_type
-    num_instances     = each.value.instances
-    manager           = module.management_node.name
+  name_prefix = each.value.name_prefix
+  family      = var.compute_family
+  arm_family  = var.compute_arm_family
 
-    boot_script       = lookup(each.value, "boot_script", null) == null ? null : file("${each.value.boot_script}")
-    compact_placement = lookup(each.value, "compact", false)
-    gpu               = lookup(each.value, "gpu_type", null) == null || lookup(each.value, "gpu_count", 0) <= 0 ? null : {
-        type  = each.value.gpu_type
-        count = each.value.gpu_count
-    }
-    service_account   = {
-        email  = var.service_account_emails["compute"]
-        scopes = var.compute_scopes
-    }
+  subnetwork    = var.subnetwork
+  machine_arch  = each.value.machine_arch
+  machine_type  = each.value.machine_type
+  num_instances = each.value.instances
+  manager       = module.management_node.name
 
-    login_node_specs  = jsonencode(var.login_node_specs)
-    nfs_mounts        = var.cluster_storage
+  boot_script       = lookup(each.value, "boot_script", null) == null ? null : file("${each.value.boot_script}")
+  compact_placement = lookup(each.value, "compact", false)
+  gpu = lookup(each.value, "gpu_type", null) == null || lookup(each.value, "gpu_count", 0) <= 0 ? null : {
+    type  = each.value.gpu_type
+    count = each.value.gpu_count
+  }
+  service_account = {
+    email  = var.service_account_emails["compute"]
+    scopes = var.compute_scopes
+  }
+
+  login_node_specs = jsonencode(var.login_node_specs)
+  nfs_mounts       = var.cluster_storage
 }

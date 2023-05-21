@@ -19,61 +19,73 @@ variable "automatic_restart" {
 }
 
 variable "boot_script" {
-    description = "(Optional) the name of a file containing a script to be executed on compute nodes at boot time"
-    type        = string
-    default     = null
+  description = "(Optional) the name of a file containing a script to be executed on compute nodes at boot time"
+  type        = string
+  default     = null
 }
 
 variable "compact_placement" {
-    description = "(Optional) a boolean which determines whether a set of compute nodes has a compact placement resource policy attached to them."
-    type        = bool
-    default     = false
+  description = "(Optional) a boolean which determines whether a set of compute nodes has a compact placement resource policy attached to them."
+  type        = bool
+  default     = false
 }
 
 variable "gpu" {
-    description = "The type and count of GPU(s) to attach to a compute node"
-    type        = object({
-        type  = string
-        count = number
-    })
-    default     = null
+  description = "The type and count of GPU(s) to attach to a compute node"
+  type = object({
+    type  = string
+    count = number
+  })
+  default = null
+}
+
+variable "family" {
+  description = "The source X86 image family prefix to use"
+  type        = string
+  default     = "flux-fw-compute-x86-64"
+}
+
+variable "arm_family" {
+  description = "The source arm image family prefix to use"
+  type        = string
+  default     = "flux-fw-compute-arm64"
 }
 
 variable "login_node_specs" {
-    description = "A JSON encoded list of maps each with the keys: 'name_prefix', 'machin_arch', 'machine_type', and 'instances' which describe the login node instances to create"
-    type        = string
+  description = "A JSON encoded list of maps each with the keys: 'name_prefix', 'machin_arch', 'machine_type', and 'instances' which describe the login node instances to create"
+  type        = string
 }
 
 variable "machine_arch" {
-    description = "The instruction set architecture, ARM64 or x86_64, used by the compute node"
-    type        = string
+  description = "The instruction set architecture, ARM64 or x86_64, used by the compute node"
+  type        = string
 }
 
 variable "machine_type" {
-    description = "The Compute Engine machine type to be used for the compute node"
-    type        = string
+  description = "The Compute Engine machine type to be used for the compute node"
+  type        = string
 }
 
 variable "manager" {
-    description = "The hostname of the Flux cluster management node"
-    type        = string
+  description = "The hostname of the Flux cluster management node"
+  type        = string
 }
 
 variable "name_prefix" {
-    description = "The name prefix for the compute node instances, the full instances names will be this prefix followed by a node number"
-    type        = string
+  description = "The name prefix for the compute node instances, the full instances names will be this prefix followed by a node number"
+  type        = string
 }
 
 variable "nfs_mounts" {
-    description = "A map with keys 'share' and 'mountpoint' describing an NFS export and its intended mount point"
-    type        = map(string)
-    default     = {}
+  description = "A map with keys 'share' and 'mountpoint' describing an NFS export and its intended mount point"
+  type        = map(string)
+  default     = {}
 }
 
 variable "num_instances" {
-    description = "The number of compute node instances to create"
-    type        = number
-    default     = 1
+  description = "The number of compute node instances to create"
+  type        = number
+  default     = 1
 }
 
 variable "on_host_maintenance" {
@@ -83,24 +95,24 @@ variable "on_host_maintenance" {
 }
 
 variable "project_id" {
-    description = "The GCP project ID"
-    type        = string
+  description = "The GCP project ID"
+  type        = string
 }
 
 variable "region" {
-    description = "The GCP region where the cluster resides"
-    type        = string
+  description = "The GCP region where the cluster resides"
+  type        = string
 }
 
 variable "service_account" {
-    description = "The GCP service account used by the compute node"
-    type        = object({
-        email  = string
-        scopes = set(string)
-    })
+  description = "The GCP service account used by the compute node"
+  type = object({
+    email  = string
+    scopes = set(string)
+  })
 }
 
 variable "subnetwork" {
-    description = "Subnetwork to deploy to"
-    type        = string
+  description = "Subnetwork to deploy to"
+  type        = string
 }
