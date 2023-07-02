@@ -30,8 +30,8 @@ module "management_node" {
 
     compute_node_specs = jsonencode(var.compute_node_specs)
     login_node_specs   = jsonencode(var.login_node_specs)
-
     nfs_mounts         = var.cluster_storage
+    broker_config      = var.broker_config
 }
 
 module "login_nodes" {
@@ -60,6 +60,7 @@ module "login_nodes" {
     }
 
     nfs_mounts      = var.cluster_storage
+    broker_config   = var.broker_config
 }
 
 module "compute_nodes" {
@@ -94,5 +95,6 @@ module "compute_nodes" {
     }
 
     login_node_specs  = jsonencode(var.login_node_specs)
+    broker_config     = var.broker_config
     nfs_mounts        = var.cluster_storage
 }

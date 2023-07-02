@@ -44,7 +44,8 @@ module "flux_login_instance_template" {
     source_image         = local.login_images["${var.machine_arch}"].image
     source_image_project = local.login_images["${var.machine_arch}"].project
     metadata             = { 
-        "boot-script"    : var.boot_script
+        "boot-script"    : var.boot_script,
+        "broker-config"  : var.broker_config,
         "enable-oslogin" : "TRUE",
         "flux-manager"   : "${var.manager}",
         "VmDnsSetting"   : "GlobalDefault",

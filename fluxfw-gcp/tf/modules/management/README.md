@@ -14,6 +14,7 @@ information includes:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| broker_config | string | n/a | A custom broker config, FLUXMANAGER is allowed to be set | no |
 | compute_node_specs | A JSON encoded list of maps each with the keys: 'name_prefix', 'machin_arch', 'machine_type', and 'instances' which describe the compute node instances to create | string | n/a | yes |
 | login_node_specs | A JSON encoded list of maps each with the keys: 'name_prefix', 'machin_arch', 'machine_type', and 'instances' which describe the login node instances to create | string | n/a | yes |
 | machine_type | The Compute Engine machine type to be used for the management node | string | n/a | yes |

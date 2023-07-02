@@ -13,6 +13,7 @@ That information includes:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| broker_config | A custom broker config (system.toml) to use instead of default. Honors FLUXMANAGER | string | n/a | no |
 | machine_arch | The instruction set architecture, ARM64 or x86_64, used by the login node | string | n/a | yes |
 | machine_type | The Compute Engine machine type to be used for the login node | string | n/a | yes |
 | manager | The hostname of the Flux cluster management node | string | n/a | yes |

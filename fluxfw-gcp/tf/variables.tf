@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "broker_config" {
+    description = "A custom broker config (system.toml) to provide to the manager"
+    type        = string
+    default     = ""
+}
+
 variable "cluster_storage" { 
     description = "A map with keys 'share' and 'mountpoint' describing an NFS export and its intended mount point"
     type        = map(string)

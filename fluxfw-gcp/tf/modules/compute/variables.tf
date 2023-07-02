@@ -18,6 +18,12 @@ variable "arm_family" {
     default     = "flux-fw-compute-arm64"
 }
 
+variable "broker_config" {
+    description = "A custom broker config (system.toml) to provide to the manager"
+    type        = string
+    default     = ""
+}
+
 variable "automatic_restart" {
   type        = bool
   description = "(Optional) Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user)."

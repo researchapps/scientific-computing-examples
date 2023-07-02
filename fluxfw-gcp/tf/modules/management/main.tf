@@ -35,6 +35,7 @@ module "flux_manager_instance_template" {
         "nfs-mounts"         : jsonencode(var.nfs_mounts)
         "compute-node-specs" : var.compute_node_specs
         "login-node-specs"   : var.login_node_specs
+        "broker-config"      : var.broker_config
     }
 }
 

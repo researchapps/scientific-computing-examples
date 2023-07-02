@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "broker_config" {
+    description = "A custom broker config (system.toml) to provide to the manager"
+    type        = string
+    default     = ""
+}
+
 variable "compute_node_specs" {
     description = "A JSON encoded list of maps each with the keys: 'name_prefix', 'machin_arch', 'machine_type', and 'instances' which describe the compute node instances to create"
     type        = string
