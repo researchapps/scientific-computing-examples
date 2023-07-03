@@ -16,9 +16,11 @@ build Flux Framework GCP images.
 ### Packer Build Step Creation
 
 The command
+
 ```bash
 ./create-buildstep.sh
 ```
+
 clones the [cloud builders community](https://github.com/GoogleCloudPlatform/cloud-builders-community) repo, determines the current latest
 Packer version and then invokes Cloud Build to create the Packer build step.
 
@@ -27,9 +29,11 @@ Packer version and then invokes Cloud Build to create the Packer build step.
 The Packer build step requires elevated privileges to create a GCP image. Rather than grant those privileges
 to the Cloud Build service account a separate `image builder` service account is created and granted the
 necessary privileges. The command
+
 ```bash
 ./builder-setup.sh
 ```
+
 creates the `image builder` service account the necessary privileges, downloads its keys, uses the Google Cloud KMS service
 to encrypt them and grants the Cloud Build service account the ability to decrypt them.
 

@@ -16,6 +16,7 @@ variable "broker_config" {
     description = "A custom broker config (system.toml) to provide to the manager"
     type        = string
     default     = ""
+    nullable    = true
 }
 
 variable "cluster_storage" { 
